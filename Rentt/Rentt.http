@@ -1,0 +1,6 @@
+@Rentt_HostAddress = http://localhost:5022
+
+GET {{Rentt_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
