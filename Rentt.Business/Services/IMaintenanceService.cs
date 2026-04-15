@@ -1,11 +1,11 @@
-﻿namespace Rentt.Services
+﻿using System.Threading.Tasks;
+
+namespace Rentt.Business.Abstract
 {
     public interface IMaintenanceService
     {
-        // Aracı bakıma gönderen komut
+        // SADECE BU İKİSİ OLMALI:
         Task<object> SendToMaintenanceAsync(int carId, string description);
-
-        // Aracı bakımdan çıkaran komut
         Task<object> ReturnFromMaintenanceAsync(int maintenanceId);
     }
 }

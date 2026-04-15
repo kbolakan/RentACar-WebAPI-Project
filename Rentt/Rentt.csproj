@@ -18,8 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
     <Folder Include="Middlewares\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rentt.Business\Rentt.Business.csproj" />
+    <ProjectReference Include="..\Rentt.DataAccess\Rentt.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-
+using Rentt.DataAccess;
 #nullable disable
 
 namespace Rentt.Migrations

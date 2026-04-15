@@ -20,15 +20,17 @@ namespace Rentt.Models
         public string Email { get; set; } = string.Empty;
 
         [Required]
-        public string PasswordHash { get; set; } = string.Empty;
+        public byte[] PasswordHash { get; set; } // Şifrelenmiş veri
 
         [Required]
-        public string Role { get; set; } = "User";
+        public byte[] PasswordSalt { get; set; } // Şifreye eklenen eşsiz tuz (güvenlik artırıcı)
 
         public string? LicenseNumber { get; set; }
         public string? LicenseClass { get; set; }
         public DateTime? LicenseIssueDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public string Role { get; set; } = "User"; // Varsayılan olarak herkes "User" olsun
 
         public ICollection<Rental> Rentals { get; set; } = new List<Rental>();
     }

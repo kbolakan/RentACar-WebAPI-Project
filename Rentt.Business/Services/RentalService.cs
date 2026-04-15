@@ -1,8 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Rentt.Data;
+using Rentt.Business.Abstract;
+using Rentt.DataAccess;
 using Rentt.Models;
+using Rentt.Services;
+using System;
+using System.Threading.Tasks;
 
-namespace Rentt.Services
+namespace Rentt.Business.Services
 {
     public class RentalService : IRentalService
     {
@@ -15,11 +19,11 @@ namespace Rentt.Services
 
         public async Task<Rental> RentCarAsync(int userId, int carId, DateTime startDate, DateTime endDate)
         {
-            var car = await _context.Cars.FindAsync(carId);
+            var car = await _context.FindAsync<Car>(carId);
             if (car == null) throw new Exception("Sistemde böyle bir araç bulunamadı.");
             if (!car.IsAvailable) throw new Exception("Üzgünüz, bu araç şu anda başkası tarafından kiralanmış veya bakımda.");
 
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _context.FindAsync<User>(userId);
             if (user == null) throw new Exception("Kullanıcı bulunamadı.");
 
             if (startDate < DateTime.UtcNow.Date || endDate <= startDate)
@@ -37,7 +41,7 @@ namespace Rentt.Services
 
             car.IsAvailable = false;
 
-            _context.Rentals.Add(rental);
+            _context.Add(rental);
             await _context.SaveChangesAsync();
 
             return rental;
@@ -45,7 +49,7 @@ namespace Rentt.Services
 
         public async Task<Rental> ReturnCarAsync(int rentalId, int returnMileage, DateTime returnDate)
         {
-            var rental = await _context.Rentals
+            var rental = await _context.Set<Rental>()
                 .Include(r => r.Car)
                 .FirstOrDefaultAsync(r => r.Id == rentalId);
 
@@ -91,6 +95,7 @@ namespace Rentt.Services
 
             await _context.SaveChangesAsync();
 
+            // Eksik olan o kritik dönüş satırı ve kapanış parantezleri eklendi!
             return rental;
         }
     }

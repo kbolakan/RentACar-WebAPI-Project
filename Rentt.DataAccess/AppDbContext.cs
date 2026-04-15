@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Rentt.Models; // Modellerimizin bulunduğu namespace'i ekliyoruz
+// YENİ KABLO: Modellerimiz artık Core binasının içinde!
+using Rentt.Models;
 
-namespace Rentt.Data
+// YENİ İKAMETGAH: Bu dosya artık koca bir DataAccess katmanı oldu!
+namespace Rentt.DataAccess
 {
     // Sınıfımızın Entity Framework yetenekleri kazanması için 'DbContext'ten miras alması şart.
     public class AppDbContext : DbContext
@@ -19,8 +21,7 @@ namespace Rentt.Data
         public DbSet<Maintenance> Maintenances { get; set; }
 
         // İddialı bir mimaride tablolar arası ilişkileri ve kısıtlamaları (Fluent API) 
-        // burada şekillendirebiliriz, ancak biz temel sınırları Model sınıflarımızda çizdiğimiz için 
-        // burası şimdilik sade ve jilet gibi kalabilir.
+        // burada şekillendirebiliriz.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

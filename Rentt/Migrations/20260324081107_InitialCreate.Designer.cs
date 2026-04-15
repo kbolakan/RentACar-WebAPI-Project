@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Rentt.Data;
+using Rentt.DataAccess;
 
 #nullable disable
 
 namespace Rentt.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(DataAccess.AppDbContext))]
     [Migration("20260324081107_InitialCreate")]
     partial class InitialCreate
     {

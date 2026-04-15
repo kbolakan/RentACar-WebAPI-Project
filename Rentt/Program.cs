@@ -1,20 +1,23 @@
-using Microsoft.EntityFrameworkCore; // Bu kütüphaneyi en üste eklemeyi unutma
-using Rentt.Data; // Kendi projendeki Data klasörünün yolunu belirtir
+using Microsoft.EntityFrameworkCore;
+using Rentt.Business.Abstract;
+using Rentt.Business.Services;
 using Rentt.Services;
+// Eski 'Data' klasörü artýk koca bir DataAccess katmaný oldu!
+// ---------------------------------------------
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// --- EKLENECEK KISIM BURASI ---
-// Veri tabaný servisimizi (AppDbContext) sisteme kaydediyoruz ve baðlantý dizesini veriyoruz.
-builder.Services.AddDbContext<AppDbContext>(options =>
+
+// Veri tabaný servisimizi (AppDbContext) DataAccess katmanýndan alýyoruz.
+builder.Services.AddDbContext<Rentt.DataAccess.AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Sisteme diyoruz ki: Biri senden IRentalService isterse, ona RentalService sýnýfýný ver!
-builder.Services.AddScoped<IRentalService, RentalService>();
-
-// YENÝ EKLENEN KABLO: Biri senden IMaintenanceService isterse, MaintenanceService'i ver!
-builder.Services.AddScoped<IMaintenanceService, MaintenanceService>();
-// ------------------------------
+// Ýþ kurallarýmýzý (Business katmanýndaki servisleri) vitrine baðlýyoruz.
+builder.Services.AddScoped<IRentalService, Rentt.Business.Services.RentalService>();
+builder.Services.AddScoped<IMaintenanceService, Rentt.Business.Services.MaintenanceService>();
+builder.Services.AddScoped<IDamageRecordService, DamageRecordService>();
+builder.Services.AddScoped<ICarService, CarService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
