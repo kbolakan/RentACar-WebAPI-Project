@@ -18,6 +18,7 @@ builder.Services.AddScoped<IRentalService, Rentt.Business.Services.RentalService
 builder.Services.AddScoped<IMaintenanceService, Rentt.Business.Services.MaintenanceService>();
 builder.Services.AddScoped<IDamageRecordService, DamageRecordService>();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
